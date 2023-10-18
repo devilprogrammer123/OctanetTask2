@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+</head>
+
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100vh;
+}
+
+.main {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    /* background-color: black; */
+
+
+}
+
+.container {
+    /* width: 50%; */
+    height: 80%;
+    background-color: rgb(199, 236, 246);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2vw 5vw;
+    border-radius: 20px;
+    box-shadow: 10px 10px 50px rgba(41, 47, 44, 0.642);
+}
+
+.top {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.top input {
+    margin-right: 50px;
+}
+
+.top>div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.list,
+table {
+    /* width: 100%; */
+}
+
+.title ,.priority,.date{
+    font-size: larger;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 1px solid ;
+    padding: 10px 30px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    width: 30%;
+    justify-content: center;
+}
+.title input,.priority input,.date input{
+    border: none;
+    border-bottom: 1px solid;
+    background-color: transparent;
+    outline: none;
+}
+.top input{
+    font-size: large;
+}
+
+#listContainer li {
+    list-style-type: decimal;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+#listContainer table {
+    width: 100%;
+    border: 2px solid;
+    border-radius: 30px;
+}
+
+th,
+td {
+    /* border: 2px solid; */
+    text-align: center;
+    width: 25%;
+}
+tr:first-child(0){
+    width: 10%;
+}
+
+tr{
+    border-radius: 20px;
+    border: 1px solid;
+    font-size: larger;
+}
+.number{
+    width: 10%;
+}
+
+button{
+    padding:10px;
+    font-size: large;
+    border-radius: 50px;
+    border: 1px solid;
+    background-color: antiquewhite;
+}
+</style>
+
+
+<body>
+    <div class="main">
+        <div class="container">
+            <div class="top">
+                <div class="title">
+                    <label for="title">Title:</label>
+                    <input id="title" type="text" placeholder="Enter The Task Title">
+                </div>
+
+                <div class="priority">
+                    <label for="priority">Priority:</label>
+                    <input id="priority" type="number" min="1" placeholder="Enter The Priority">
+                </div>
+
+                <div class="date">
+                    <label for="date">Date:</label>
+                    <input id="date" value="2023-10-19" type="date">
+                </div>
+            </div>
+            <div class="button">
+                <button onclick="addTask()">Add Task</button>
+            </div>
+            <div id="listContainer">
+                <table class="tableCon">
+                    <tr>
+
+                        <th class="number">S.NO</th>
+                        <th>Title</th>
+                        <th>Priority</th>
+                        <th>Deadline(Days left)</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+  <script >
+    const title = document.querySelector("#title");
+const deadline = document.querySelector("#date");
+const priority = document.querySelector("#priority");
+const listContainer = document.querySelector("#listContainer");
+const tableCon = document.querySelector("table");
+let SNo = 1;
+
+
+
+
+function addTask() {
+
+
+    if (title.value === "" || deadline.value === "" || priority.value === "") {
+        alert("please fill the all fields")
+    }
+
+    else {
+        let tr = document.createElement("tr");
+
+
+        const currentDate = new Date();
+
+        const givenDateStr = deadline.value;
+
+        const givenDate = new Date(givenDateStr);
+
+        const timeDifference = givenDate - currentDate;
+        const dayDifference = Math.floor(timeDifference / (1000 * 3600 * 24));
+
+
+        tr.innerHTML = `
+                             <td style="width:10%" >${SNo++}</td>
+                             <td>${title.value}</td>
+                             <td>${priority.value}</td>
+                             <td>${`${deadline.value} ${dayDifference} Days left`}</td>
+                        `
+
+
+        tableCon.appendChild(tr);
+
+
+
+
+    }
+    title.value = "";
+    deadline.value = "";
+    priority.value = "";
+}
+
+
+  </script>
+</body>
+
+</html>
